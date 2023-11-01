@@ -12,6 +12,8 @@ If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-trigg
 
 For testing I use the [Hive MQ broker](https://www.hivemq.com/mqtt/public-mqtt-broker/).
 
+<br>
+
 ## Future 
 
 In the future I will make the ESP32 aware of the ligth bulb status subscribing to the rpc channel/topic where the Shelly's relay automatically publish the status (on or off).
