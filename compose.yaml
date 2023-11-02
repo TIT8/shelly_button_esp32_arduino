@@ -1,0 +1,36 @@
+name: mqtt
+services:
+  mqtt:
+    container_name: mqtt
+    image: eclipse-mosquitto:latest
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 1883
+      published: "1883"
+      protocol: tcp
+    - mode: ingress
+      target: 9001
+      published: "9001"
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /mqtt/config
+      target: /mosquitto/config
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /mqtt/data
+      target: /mosquitto/data
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /mqtt/log
+      target: /mosquitto/log
+      bind:
+        create_host_path: true
+networks:
+  default:
+    name: mqtt_default
