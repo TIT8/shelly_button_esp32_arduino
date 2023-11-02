@@ -15,7 +15,7 @@ If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-trigg
 
 - For testing I use the [Hive MQ public broker](https://www.hivemq.com/mqtt/public-mqtt-broker/).
 
-- For production I use [Mosquitto](https://mosquitto.org/) from a Docker container inside the OpenMediaVault system on my Raspberry pi 4 (see the [Docker compose file](https://github.com/TIT8/shelly_button_esp32/blob/master/compose.yaml) that I've added to _OMV-Compose_ plugin).
+- For production I use [Mosquitto](https://mosquitto.org/) from a Docker container inside my local environment (see the [Docker compose file](https://github.com/TIT8/shelly_button_esp32/blob/master/compose.yaml) from [these instuctions](https://github.com/sukesh-ak/setup-mosquitto-with-docker)).
 
 ## Prerequisities
 
