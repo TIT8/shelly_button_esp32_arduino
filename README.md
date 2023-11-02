@@ -1,8 +1,8 @@
 # Arduino code for Shelly's toggle button
 
-A push button is connected to the [ESP32](https://github.com/espressif/arduino-esp32) microcontroller. When its state changes, it will trigger an MQTT publish which will toggle the light controlled by a Shelly plus 1 relay on and off. 
+A push button is connected to the [ESP32](https://github.com/espressif/arduino-esp32) microcontroller. When its state changes, it will trigger an MQTT publish which will toggle the light controlled by a Shelly plus 1 relay. 
 
-❗Keep in mind that you should either use a capacitor (better) or providing some delay in the code to debounce the push button and filter out spurious changes. Pull down the push button via a 10k resistor at least.
+❗Keep in mind that you should either use a capacitor (better) or providing some delay in the code to debounce the push button and filter out spurious changes. Pull down the push button via a 10k resistor.
 
 
 <br>
@@ -13,7 +13,7 @@ A push button is connected to the [ESP32](https://github.com/espressif/arduino-e
 
 If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-triggering#unfiltered) in your wall and want to try out the MQTT connection without purchasing or wiring up the micontroller, on [Wokwi](https://wokwi.com/projects/380235936487757825) I've saved a prototype of the project.
 
-For testing I use the [Hive MQ broker](https://www.hivemq.com/mqtt/public-mqtt-broker/).
+For testing I use the [Hive MQ broker](https://www.hivemq.com/mqtt/public-mqtt-broker/). For production I use [Mosquitto](https://mosquitto.org/) from a Docker container inside the OpenMediaVault system on my Raspberry pi 4. 
 
 ## Prerequisities
 
@@ -29,9 +29,9 @@ For testing I use the [Hive MQ broker](https://www.hivemq.com/mqtt/public-mqtt-b
 
 - I will make possible an initial speech recognition through a microphone and a Keras neural network (via [Eddge Impulse](https://edgeimpulse.com/) and [Colab](https://colab.research.google.com/) for training it), like in [this video](https://www.youtube.com/watch?v=fRSVQ4Fkwjc) from DigiKey.
 
-- I won't use the [official ESP-IDF](https://github.com/espressif/esp-idf) with the built-in mqtt library (or via [Cesanta Mongoose MQTT](https://mongoose.ws/documentation/tutorials/mqtt-client/) library) because is too much power for this project.
+- I won't use the [official ESP-IDF](https://github.com/espressif/esp-idf) with the built-in MQTT library (or via [Cesanta Mongoose MQTT](https://mongoose.ws/documentation/tutorials/mqtt-client/) library) because is too much power for this project.
 
-- Using Kicad, directly create a PCB with push button, microphone + opamp (considering noise constraint) and microcontroller on one board.
+- Using Kicad, directly create a PCB with push button, microphone + opamp (considering noise constraint) and microcontroller on the same board.
 
 ## Why use C++ and not Micropython or Rust?
 
