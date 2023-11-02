@@ -19,4 +19,4 @@ For testing I use the [Hive MQ broker](https://www.hivemq.com/mqtt/public-mqtt-b
 
 - I will make the ESP32 aware of the ligth bulb status subscribing to the rpc channel/topic where the Shelly's relay automatically publish the status (on or off).
 
-- I hope to also have the time to set a MQTT broker on my personal rasperry pi at home.
+- I will make possible an initial speech recognition through a microphone and a Keras neural network (via [Eddge Impulse](https://edgeimpulse.com/) and [Colab](https://colab.research.google.com/) for training it).
