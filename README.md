@@ -28,3 +28,6 @@ For testing I use the [Hive MQ broker](https://www.hivemq.com/mqtt/public-mqtt-b
 
 - Using Kicad, directly create a PCB with push button, microphone + opamp (considering noise constraint) and microcontroller on one board.
 
+## Why use C++ and not Micropython or Rust?
+
+The answer lies in the low level of the library. Python will depend on C++ code, Rust instead can go to bare metal, but it's by far more tedious. Try doing [this](https://wokwi.com/projects/362016607277953025) on Rust, I find better on C++.
