@@ -5,15 +5,15 @@
 
 const char* ssid = "REPLACE_WITH_YOUR_SSID";
 const char* password = "REPLACE_WITH_YOUR_PASSWORD";
-
 const char* mqtt_server = "YOUR_MQTT_BROKER_IP_ADDRESS";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 
 bool button = 0;
-bool last = 0;
+bool state = 0;
 bool current = 0;
+
 
 void setup() {
   Serial.begin(115200);
@@ -24,6 +24,7 @@ void setup() {
 
   pinMode(BUTTON_PIN, INPUT);
 }
+
 
 void setup_wifi() {
   delay(10);
@@ -45,6 +46,7 @@ void setup_wifi() {
   Serial.println(WiFi.localIP());
 }
 
+
 void callback(char* topic, byte* message, unsigned int length) {
   Serial.print("Message arrived on topic: ");
   Serial.print(topic);
@@ -58,6 +60,7 @@ void callback(char* topic, byte* message, unsigned int length) {
 
   Serial.println();
 }
+
 
 void reconnect() {
   while (!client.connected()) {
@@ -75,6 +78,8 @@ void reconnect() {
     }
   }
 }
+
+
 void loop() {
   if (!client.connected()) {
     reconnect();
@@ -83,14 +88,10 @@ void loop() {
 
   button = digitalRead(BUTTON_PIN);
   if (button == 1) {
-    if (last == 1 && current == 0) {
-      Serial.println("0");
-      client.plublish("shellyplus1-blabla/command/switch:0", "off");
-      last = 0;
-    } else if (last == 0 && current == 0) {
-      Serial.println("1");
-      client.plublish("shellyplus1-blabla/command/switch:0", "on");
-      last = 1;
+    if (current == 0) {
+      state = !state;
+      Serial.println(state ? "1" : "0");
+      client.publish("shellyplus1-blabla/command/switch:0", state ? "on" : "off");
     }
     current = 1;
   } else {
