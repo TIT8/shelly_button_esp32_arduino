@@ -14,6 +14,11 @@ If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-trigg
 
 For testing I use the [Hive MQ broker](https://www.hivemq.com/mqtt/public-mqtt-broker/).
 
+## Prerequisities
+
+- I've used [Arduino IDE](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html#installing-using-arduino-ide) to code, compile and upload the code to the ESP32 Wroom board.
+
+- Remember to add the [CP2102 driver](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads) to connect old ESP32 development board (with CP2102 as USB-UART bridge).
 
 ## Future 
 
@@ -23,9 +28,3 @@ For testing I use the [Hive MQ broker](https://www.hivemq.com/mqtt/public-mqtt-b
 
 - Using Kicad, directly create a PCB with push button, microphone + opamp (considering noise constraint) and microcontroller on one board.
 
-
-## Prerequisities
-
-- I've used [Arduino IDE](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html#installing-using-arduino-ide) to code, compile and upload the code to the ESP32 Wroom board.
-
-- Remember to add the [CP2102 driver](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads) to connect old ESP32 development board (with CP2102 as USB-UART bridge).
