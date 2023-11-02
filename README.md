@@ -29,7 +29,7 @@ For testing I use the [Hive MQ broker](https://www.hivemq.com/mqtt/public-mqtt-b
 
 - I will make possible an initial speech recognition through a microphone and a Keras neural network (via [Eddge Impulse](https://edgeimpulse.com/) and [Colab](https://colab.research.google.com/) for training it), like in [this video](https://www.youtube.com/watch?v=fRSVQ4Fkwjc) from DigiKey.
 
-- I won't use the [official ESP-IDF](https://github.com/espressif/esp-idf) with built mqtt library (or via [Cesanta Mongoose MQTT](https://mongoose.ws/documentation/tutorials/mqtt-client/) library) because is too much power for this project.
+- I won't use the [official ESP-IDF](https://github.com/espressif/esp-idf) with the built-in mqtt library (or via [Cesanta Mongoose MQTT](https://mongoose.ws/documentation/tutorials/mqtt-client/) library) because is too much power for this project.
 
 - Using Kicad, directly create a PCB with push button, microphone + opamp (considering noise constraint) and microcontroller on one board.
 
