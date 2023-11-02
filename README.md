@@ -2,7 +2,7 @@
 
 A push button is connected to the [ESP32](https://github.com/espressif/arduino-esp32) microcontroller. When its state changes, it will trigger an MQTT publish which will toggle the light controlled by a Shelly plus 1 relay on and off. 
 
-❗Keep in mind that you should either use a capacitor (better) or providing some delay in the code to debounce the push button and filter out spurious changes. Pull down the push button via a 1k resistor at least.
+❗Keep in mind that you should either use a capacitor (better) or providing some delay in the code to debounce the push button and filter out spurious changes. Pull down the push button via a 10k resistor at least.
 
 <br>
 
