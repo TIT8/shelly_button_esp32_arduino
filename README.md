@@ -19,7 +19,7 @@ If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-trigg
 
 ## Prerequisities
 
-1. I've used [Arduino IDE](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html#installing-using-arduino-ide) to code, compile and upload the code to the ESP32 Wroom board.
+1. [Arduino IDE](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html#installing-using-arduino-ide) to code, compile and upload the code to the ESP32 Wroom board.
 
 2. Remember to add the [CP2102 driver](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads) to connect old ESP32 development board (with CP2102 as USB-UART bridge).
 
