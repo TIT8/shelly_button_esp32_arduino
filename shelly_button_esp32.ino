@@ -16,6 +16,9 @@ bool button = 0;
 bool state = 0;
 bool current = 0;
 
+unsigned long previousMillis = 0UL;
+unsigned long interval = 200UL;
+
 
 void setup() {
   Serial.begin(115200);
@@ -97,17 +100,21 @@ void loop() {
   }
   client.loop();
 
-  button = digitalRead(BUTTON_PIN);
-  if (button == 1) {
-    if (current == 0) {
-      state = !state;
-      Serial.println(state ? "on" : "off");
-      client.publish("shellyplus1-<YOUR_SHELLY_ID>/command/switch:0", state ? "on" : "off");
-    }
-    current = 1;
-  } else {
-    current = 0;
-  }
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis > interval) {  // Debouncing
 
-  delay(200);  // Debouncing
+    button = digitalRead(BUTTON_PIN);
+    if (button == 1) {
+      if (current == 0) {
+        state = !state;
+        Serial.println(state ? "on" : "off");
+        client.publish("shellyplus1-<YOUR_SHELLY_ID>/command/switch:0", state ? "on" : "off");
+      }
+      current = 1;
+    } else {
+      current = 0;
+    }
+
+    previousMillis = currentMillis;
+  }
 }
