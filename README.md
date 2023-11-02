@@ -13,7 +13,7 @@ A push button is connected to the [ESP32](https://github.com/espressif/arduino-e
 
 If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-triggering#unfiltered) in your wall and want to try out the MQTT connection without purchasing or wiring up the micontroller, on [Wokwi](https://wokwi.com/projects/380235936487757825) I've saved a prototype of the project.
 
-For testing I use the [Hive MQ broker](https://www.hivemq.com/mqtt/public-mqtt-broker/). For production I use [Mosquitto](https://mosquitto.org/) from a Docker container inside the OpenMediaVault system on my Raspberry pi 4 (see the [Docker compose file](https://github.com/TIT8/shelly_button_esp32/blob/master/compose.yaml) that I've added to OMV Compose plugin).
+For testing I use the [Hive MQ broker](https://www.hivemq.com/mqtt/public-mqtt-broker/). For production I use [Mosquitto](https://mosquitto.org/) from a Docker container inside the OpenMediaVault system on my Raspberry pi 4 (see the [Docker compose file](https://github.com/TIT8/shelly_button_esp32/blob/master/compose.yaml) that I've added to _OMV-Compose_ plugin).
 
 ## Prerequisities
 
