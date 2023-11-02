@@ -15,7 +15,7 @@ If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-trigg
 
 - For testing I use the [Hive MQ public broker](https://www.hivemq.com/mqtt/public-mqtt-broker/).
 
-- For production I use [Mosquitto](https://mosquitto.org/) from a Docker container inside my local environment (see the [Docker compose file](https://github.com/TIT8/shelly_button_esp32/blob/master/compose.yaml) from [these instuctions](https://github.com/sukesh-ak/setup-mosquitto-with-docker)).
+- For production I use [Mosquitto](https://mosquitto.org/) from a Docker container inside my local environment (see the [Docker compose file](https://github.com/TIT8/shelly_button_esp32/blob/master/compose.yaml)).
 
 ## Prerequisities
 
@@ -24,6 +24,8 @@ If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-trigg
 2. Remember to add the [CP2102 driver](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads) to connect old ESP32 development board (with CP2102 as USB-UART bridge).
 
 3. The [ArduinJson](https://arduinojson.org/) and the [pubsubclient](https://github.com/knolleary/pubsubclient) libraries.
+
+4. [How to](https://github.com/sukesh-ak/setup-mosquitto-with-docker) setup a local broker in a Docker container.
 
 ## Future 
 
