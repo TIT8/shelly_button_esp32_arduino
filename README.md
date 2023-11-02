@@ -18,6 +18,6 @@ For testing I use the [Hive MQ broker](https://www.hivemq.com/mqtt/public-mqtt-b
 
 ## Future 
 
-In the future I will make the ESP32 aware of the ligth bulb status subscribing to the rpc channel/topic where the Shelly's relay automatically publish the status (on or off).
+- I will make the ESP32 aware of the ligth bulb status subscribing to the rpc channel/topic where the Shelly's relay automatically publish the status (on or off).
 
-I hope to also have the time to set a MQTT broker on my personal rasperry pi at home.
+- I hope to also have the time to set a MQTT broker on my personal rasperry pi at home.
