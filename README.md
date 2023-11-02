@@ -14,7 +14,6 @@ If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-trigg
 
 For testing I use the [Hive MQ broker](https://www.hivemq.com/mqtt/public-mqtt-broker/).
 
-<br>
 
 ## Future 
 
