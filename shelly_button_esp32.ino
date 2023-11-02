@@ -17,7 +17,7 @@ bool state = 0;
 bool current = 0;
 
 unsigned long previousMillis = 0UL;
-unsigned long interval = 200UL;
+unsigned long interval = 150UL;
 
 
 void setup() {
