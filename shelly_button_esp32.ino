@@ -1,6 +1,9 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
+#include <ESPmDNS.h>
+#include <WiFiUdp.h>
+#include <ArduinoOTA.h>
 
 
 #define BUTTON_PIN 26
@@ -21,11 +24,39 @@ unsigned long interval = 150UL;
 
 
 void setup() {
-  Serial.begin(115200);
+  //Serial.begin(115200);
 
   setup_wifi();
   client.setServer(mqtt_server, 1883);  // Change the port if needed
   client.setCallback(callback);
+
+  ArduinoOTA
+    .onStart([]() {
+      String type;
+      if (ArduinoOTA.getCommand() == U_FLASH)
+        type = "sketch";
+      else  // U_SPIFFS
+        type = "filesystem";
+
+      // NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
+      Serial.println("Start updating " + type);
+    })
+    .onEnd([]() {
+      Serial.println("\nEnd");
+    })
+    .onProgress([](unsigned int progress, unsigned int total) {
+      Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
+    })
+    .onError([](ota_error_t error) {
+      Serial.printf("Error[%u]: ", error);
+      if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
+      else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
+      else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
+      else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
+      else if (error == OTA_END_ERROR) Serial.println("End Failed");
+    });
+
+  ArduinoOTA.begin();
 
   pinMode(BUTTON_PIN, INPUT);
 }
@@ -53,17 +84,17 @@ void setup_wifi() {
 
 
 void callback(char* topic, byte* message, unsigned int length) {
-  Serial.print("Message arrived on topic: ");
-  Serial.print(topic);
-  Serial.print(". Message: ");
+  //Serial.print("Message arrived on topic: ");
+  //Serial.print(topic);
+  //Serial.print(". Message: ");
   String messageTemp;
   StaticJsonDocument<400> json;
 
   for (int i = 0; i < length; i++) {
-    Serial.print((char)message[i]);
+    //Serial.print((char)message[i]);
     messageTemp += (char)message[i];
   }
-  Serial.println();
+  //Serial.println();
 
   DeserializationError error = deserializeJson(json, messageTemp.c_str());
   if (error) {
@@ -107,7 +138,7 @@ void loop() {
     if (button == 1) {
       if (current == 0) {
         state = !state;
-        Serial.println(state ? "on" : "off");
+        //Serial.println(state ? "on" : "off");
         client.publish("shellyplus1-<YOUR_SHELLY_ID>/command/switch:0", state ? "on" : "off");
       }
       current = 1;
@@ -117,4 +148,6 @@ void loop() {
 
     previousMillis = currentMillis;
   }
+
+  ArduinoOTA.handle();
 }
