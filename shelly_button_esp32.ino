@@ -24,11 +24,12 @@ unsigned long interval = 150UL;
 
 
 void setup() {
-  //Serial.begin(115200);
+  Serial.begin(115200);
 
   setup_wifi();
   client.setServer(mqtt_server, 1883);  // Change the port if needed
   client.setCallback(callback);
+  client.setKeepalive(30);
 
   ArduinoOTA
     .onStart([]() {
