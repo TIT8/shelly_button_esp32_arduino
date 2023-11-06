@@ -4,10 +4,9 @@ A push button is connected to the [ESP32](https://github.com/espressif/arduino-e
 
 ❗Keep in mind that you should either use a capacitor (better) or providing some delay in the code to debounce the push button and filter out spurious changes. Pull down the push button via a 10k resistor.
 
-
 <br>
 
-<p align="center"><img src="https://github.com/TIT8/shelly_button_esp32/assets/68781644/f375bfb9-0300-4f1e-923b-a293725be1d0" alt="Schematich" width='300' /></p>
+<p align="center"><img src="https://github.com/TIT8/shelly_button_esp32/assets/68781644/708438ba-4cfb-46ab-8b4e-c0fcf803dfa8" alt="Schematich" width='300' /></p>
 
 <br>
 
