@@ -15,7 +15,6 @@ const char* mqtt_server = "YOUR_MQTT_BROKER_IP_ADDRESS";
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-bool button = 0;
 bool state = 0;
 bool current = 0;
 
@@ -135,8 +134,7 @@ void loop() {
   unsigned long currentMillis = millis();
   if (currentMillis - previousMillis > interval) {  // Debouncing
 
-    button = digitalRead(BUTTON_PIN);
-    if (!button) {
+    if (!digitalRead(BUTTON_PIN)) {
       if (!current) {
         state = !state;
         //Serial.println(state ? "on" : "off");
