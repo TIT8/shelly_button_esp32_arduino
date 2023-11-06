@@ -29,7 +29,7 @@ void setup() {
   setup_wifi();
   client.setServer(mqtt_server, 1883);  // Change the port if needed
   client.setCallback(callback);
-  client.setKeepalive(30);
+  client.setKeepAlive(30);
 
   ArduinoOTA
     .onStart([]() {
@@ -59,7 +59,7 @@ void setup() {
 
   ArduinoOTA.begin();
 
-  pinMode(BUTTON_PIN, INPUT);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
 }
 
 
@@ -136,8 +136,8 @@ void loop() {
   if (currentMillis - previousMillis > interval) {  // Debouncing
 
     button = digitalRead(BUTTON_PIN);
-    if (button == 1) {
-      if (current == 0) {
+    if (!button) {
+      if (!current) {
         state = !state;
         //Serial.println(state ? "on" : "off");
         client.publish("shellyplus1-<YOUR_SHELLY_ID>/command/switch:0", state ? "on" : "off");
