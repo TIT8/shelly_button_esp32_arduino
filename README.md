@@ -38,7 +38,9 @@ If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-trigg
 
 ## Why use C++ and not Micropython or Rust?
 
-The answer lies in the low level of the libraries used. Python will depend on low level C code, while Rust can go to bare metal, but it's by far more tedious. Try doing [this](https://wokwi.com/projects/362016607277953025) on Rust, I find it better on C++.
+The answer lies in the low level of the libraries used. Python will depend on low level C code, while Rust can go to bare metal, but it's by far more tedious. Try doing [this](https://wokwi.com/projects/362016607277953025) on Rust, I find it better on C++.  
+
+Then the library support for microcontroller is not yet ready as in C/C++. 
 
 Take a look also at the [ESP-IDF version](https://github.com/TIT8/shelly_esp32_button_espidf/tree/master) of this project. Don't look to much at it, otherwise you won't never come back to Arduino 😍 🙈.
 
