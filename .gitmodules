@@ -1,0 +1,3 @@
+[submodule "ESP_IDF_version"]
+	path = ESP_IDF_version
+	url = https://github.com/TIT8/shelly_esp32_button_espidf.git
