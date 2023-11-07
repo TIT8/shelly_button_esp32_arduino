@@ -17,9 +17,11 @@ PubSubClient client(espClient);
 
 volatile bool state = 0;
 bool current = 0;
+bool button_current = 0;
+bool button_last = 0;
 
-unsigned long previousMillis = 0UL;
-unsigned long interval = 150UL;
+unsigned long previous_millis = 0UL;
+unsigned long interval = 75UL;
 
 
 void setup() {
@@ -132,10 +134,14 @@ void loop() {
   }
   client.loop();
 
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis > interval) {  // Debouncing
+  button_current = digitalRead(BUTTON_PIN);
+  if (button_current != button_last) {
+    previous_millis = millis();
+  }
 
-    if (!digitalRead(BUTTON_PIN)) {
+  if ((millis() - previous_millis) > interval) {  // Debouncing
+
+    if (!button_current) {
       if (!current) {
         //Serial.println(state ? "on" : "off");
         client.publish("shellyplus1-<YOUR_SHELLY_ID>/command/switch:0", state ? "off" : "on");
@@ -144,9 +150,9 @@ void loop() {
     } else {
       current = 0;
     }
-
-    previousMillis = currentMillis;
   }
+
+  button_last = button_current;
 
   ArduinoOTA.handle();
 }
