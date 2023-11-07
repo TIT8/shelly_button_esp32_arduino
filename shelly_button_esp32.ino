@@ -15,7 +15,7 @@ const char* mqtt_server = "YOUR_MQTT_BROKER_IP_ADDRESS";
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-bool state = 0;
+volatile bool state = 0;
 bool current = 0;
 
 unsigned long previousMillis = 0UL;
@@ -113,7 +113,8 @@ void reconnect() {
 
     if (client.connect("Esp32_id")) {
       Serial.println("connected");
-      client.subscribe("shellyplus1-<YOUR_SHELLY_ID>/status/switch:0");
+      client.subscribe("shellyplus1-<YOUR_SHELLY_ID>/status/switch:0", 1);
+      client.publish("shellyplus1-<YOUR_SHELLY_ID>/command/switch:0", "status_update");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -136,9 +137,8 @@ void loop() {
 
     if (!digitalRead(BUTTON_PIN)) {
       if (!current) {
-        state = !state;
         //Serial.println(state ? "on" : "off");
-        client.publish("shellyplus1-<YOUR_SHELLY_ID>/command/switch:0", state ? "on" : "off");
+        client.publish("shellyplus1-<YOUR_SHELLY_ID>/command/switch:0", state ? "off" : "on");
       }
       current = 1;
     } else {
