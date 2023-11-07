@@ -42,7 +42,7 @@ The answer lies in the low level of the libraries used. Python will depend on lo
 
 Then the library support for microcontroller is not yet ready as in C/C++. 
 
-Take a look also at the [ESP-IDF version](https://github.com/TIT8/shelly_esp32_button_espidf/tree/master) of this project. Don't look to much at it, otherwise you won't never come back to Arduino 😍 🙈.
+Take a look also at the [ESP-IDF version](https://github.com/TIT8/shelly_esp32_button_espidf/tree/master) of this project. Don't look too much at it, otherwise you won't never come back to Arduino 😍 🙈.
 
 ## Shelly options
 
