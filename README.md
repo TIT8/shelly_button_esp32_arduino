@@ -28,17 +28,19 @@ If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-trigg
 
 ## Future 
 
-- ~~I will make the ESP32 aware of the ligth bulb status subscribing to the rpc channel/topic where the Shelly's relay automatically publish the status (on or off).~~ [DONE ✔️]
+- ~~I will make the ESP32 aware of the ligth bulb status subscribing to the rpc channel/topic where the Shelly's relay automatically publish the status (on or off).~~ &nbsp; [DONE ✔️]
 
 - I will make possible an initial speech recognition through a microphone and a Keras neural network (via [Eddge Impulse](https://edgeimpulse.com/) and [Colab](https://colab.research.google.com/) for training it), like in [this video](https://www.youtube.com/watch?v=fRSVQ4Fkwjc) from DigiKey.
 
-- I won't use the [official ESP-IDF](https://github.com/espressif/esp-idf) with the built-in MQTT library (or via [Cesanta Mongoose MQTT](https://mongoose.ws/documentation/tutorials/mqtt-client/) library) because is too much power for this project.
+- ~~I won't use the [official ESP-IDF](https://github.com/espressif/esp-idf) with the built-in MQTT library (or via [Cesanta Mongoose MQTT](https://mongoose.ws/documentation/tutorials/mqtt-client/) library) because is too much power for this project.~~ &nbsp; [[DONE ✔️](https://github.com/TIT8/shelly_esp32_button_espidf/tree/master)]
 
 - Using Kicad, directly create a PCB with push button, microphone + opamp (considering noise constraint) and microcontroller on the same board.
 
 ## Why use C++ and not Micropython or Rust?
 
 The answer lies in the low level of the libraries used. Python will depend on low level C code, while Rust can go to bare metal, but it's by far more tedious. Try doing [this](https://wokwi.com/projects/362016607277953025) on Rust, I find it better on C++.
+
+Take a look also at the [ESP-IDF version](https://github.com/TIT8/shelly_esp32_button_espidf/tree/master) of this project. Don't look to much at it, otherwise you won't never come back to Arduino 😍 🙈.
 
 ## Shelly options
 
