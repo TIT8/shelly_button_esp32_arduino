@@ -1,22 +1,32 @@
-name: Update submodule
-on: workflow_dispatch
+name: 'Submodules Sync'
+
+on:
+  workflow_dispatch:
+
 jobs:
-  build:
+  sync:
+    name: 'Submodules Sync'
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
       with:
-        persist-credentials: false
-        fetch-depth: 0 
-    - name: Submodule update
+        token: ${{ secrets.CI_TOKEN }}
+        submodules: true
+
+    - name: Git Sumbodule Update
       run: |
-        git submodule init
-        git submodule update --remote --merge
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git commit -m "update submodule" -a
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ github.ref }}
+        git pull --recurse-submodules
+        git submodule update --remote --recursive
+
+    - name: Commit update
+      run: |
+        git config --global user.name 'Git bot'
+        git config --global user.email 'bot@noreply.github.com'
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+        git commit -am "Auto updated submodule references" && git push || echo "No changes to commit"
