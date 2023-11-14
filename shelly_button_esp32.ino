@@ -86,17 +86,17 @@ void setup_wifi() {
 
 
 void callback(char* topic, byte* message, unsigned int length) {
-  //Serial.print("Message arrived on topic: ");
-  //Serial.print(topic);
-  //Serial.print(". Message: ");
+  Serial.print("Message arrived on topic: ");
+  Serial.print(topic);
+  Serial.print(". Message: ");
   String messageTemp;
   StaticJsonDocument<400> json; // The size can be less
 
   for (int i = 0; i < length; i++) {
-    //Serial.print((char)message[i]);
+    Serial.print((char)message[i]);
     messageTemp += (char)message[i];
   }
-  //Serial.println();
+  Serial.println();
 
   DeserializationError error = deserializeJson(json, messageTemp.c_str());
   if (error) {
@@ -143,8 +143,9 @@ void loop() {
 
     if (!button_current) {
       if (!current) {
-        //Serial.println(state ? "on" : "off");
-        client.publish("shellyplus1-<YOUR_SHELLY_ID>/command/switch:0", state ? "off" : "on");
+        Serial.println(state ? "on" : "off");
+        state = !state;
+        client.publish("shellyplus1-<YOUR_SHELLY_ID>/command/switch:0", state ? "on" : "off");
       }
       current = 1;
     } else {
