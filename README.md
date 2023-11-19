@@ -27,7 +27,7 @@ If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-trigg
 
 - ~~I will make the ESP32 aware of the ligth bulb status subscribing to the rpc channel/topic where the Shelly's relay automatically publish the status (on or off).~~ &nbsp; [DONE ✔️]
 
-- I will make possible an initial speech recognition through a microphone and a Keras neural network (via [Eddge Impulse](https://edgeimpulse.com/) and [Colab](https://colab.research.google.com/) for training it), like in [this video](https://www.youtube.com/watch?v=fRSVQ4Fkwjc) from DigiKey.
+- ~~I will make possible an initial speech recognition through a microphone and a Keras neural network (via [Eddge Impulse](https://edgeimpulse.com/) and [Colab](https://colab.research.google.com/) for training it), like in [this video](https://www.youtube.com/watch?v=fRSVQ4Fkwjc) from DigiKey.~~ [[DONE ✔️]](https://github.com/TIT8/shelly_button_esp32_arduino/tree/master/speech_recognition)
 
 - ~~I won't use the [official ESP-IDF](https://github.com/espressif/esp-idf) with the built-in MQTT library (or via [Cesanta Mongoose MQTT](https://mongoose.ws/documentation/tutorials/mqtt-client/) library) because is too much power for this project.~~ &nbsp; [[DONE ✔️](https://github.com/TIT8/shelly_esp32_button_espidf/tree/master)]
 
