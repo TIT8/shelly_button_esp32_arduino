@@ -1,5 +1,5 @@
 # Introduction
 
-# Choose the right CPU
+## Choose the right CPU
 
-# Tweak the probabilities for your use case
+## Tweak the probabilities for your use case
