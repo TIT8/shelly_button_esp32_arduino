@@ -25,7 +25,7 @@ In the rp2040 the PIO make it easy to interface with the PDM train on the input 
 
 ## Choose the right CPU
 
-The rp2040 is a great CPU, the PIO hardware is a great feature, but without the floating point unit, the intensive digital signal processing on the audio samples becomes to much for the ARM Cortex MO+ inside it. So it will end up using too much time to process the sample in the buffer and make inference only after a great latency. You will notice it. 
+The rp2040 is a great CPU, the PIO hardware is a great feature, but without the floating point unit, the intensive digital signal processing on the audio samples becomes too much for the ARM Cortex MO+ inside it. So it will end up using too much time to process the sample in the buffer and make inference only after a great latency. You will notice it. 
 
 Even if the rp2040 is a dual core CPU at 133 MHz, the ARM Cortex M4 inside the nrf52 is faster in the digital signal processing part thanks to the FPU, making possible the inference on the readily available sampled data with very low latency. As a human, you can't feel it. 
 
