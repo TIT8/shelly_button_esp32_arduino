@@ -38,7 +38,7 @@ The rp2040 is a great CPU, the PIO hardware is a great feature, but without the 
 
 Even if the rp2040 is a dual core CPU at 133 MHz, the ARM Cortex M4 inside the nrf52 is faster in the digital signal processing part thanks to the FPU, making possible the inference on the readily available sampled data with very low latency. As a human, you can't feel it. 
 
-In the table below I list the speed results from my tests. The Raspberry pi 4 is just for reference:
+In the table below I list the speed results from my tests. The Raspberry pi 4 and ESP32 are just for reference:
 
 | CPU | RP2040 | nrf52 | RPI 4 | ESP-EYE |
 | ---- | :----: | :----: | :----: | :----: |
