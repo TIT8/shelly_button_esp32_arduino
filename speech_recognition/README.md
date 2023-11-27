@@ -48,7 +48,8 @@ In the table below I list the speed results from my tests. The Raspberry pi 4 is
 | Inference time [^2] | 6 ms | 5 ms | 1 ms | 5ms |
 
 I believe that the difference between the ESP-EYE and the nrf52 is due to the _sampling-and-processing-from-the-mic_ part, instead of the audio digital processing (they both have a FPU). **The dedicated hardware on the nrf52 make it faster also than the EPS32**, so a PDM microphone here is better than a classic microphone connected via I2S.   
-Moving to faster CPU is not always better. This is why in today CPU, the AI part is made faster via special processor (directly training it on the CPU, not in the cloud).
+
+***Moving to faster CPU is not always better.***
 
 [^2]: Data coming from Edge Impulse. The real behaviour follows the data, from my tests.
 
