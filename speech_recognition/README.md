@@ -34,7 +34,7 @@ In the table below I list the speed results from my tests. The Raspberry pi 4 is
 | CPU | RP2040 | nrf52 | RPI 4 |
 | ---- | :----: | :----: | :----: |
 | ISA | ARM Cortex M0+ | ARM Cortex M4 | ARM Cortex-A72 |
-| CPU specs | <ul><li>Dual core 133 MHz</li><li>Without FPU</li><li>PIO for PDM samples + DMA</li></ul> | <ul><li>One core 64 MHz</li><li>With FPU</li><li>PDM hardware + Easy DMA</li></ul> | <ul><li>Quad core 1.8 GHz</li><li>With FPU and more</li><li>DMA (more complex and powerful)</li></ul> |
+| CPU specs | <ul><li>Dual core 133 MHz</li><li>Without FPU</li><li>PIO for PDM samples + DMA</li></ul> | <ul><li>One core 64 MHz</li><li>With FPU</li><li>PDM hardware + Easy DMA</li></ul> | <ul><li>Quad core 1.8 GHz</li><li>With FPU and more</li><li>External MIC interface</li></ul> |
 | DSP time [^1] | 970 ms | 280 ms | 10 ms |
 | Inference time [^1] | 6 ms | 5 ms | 1 ms |
 
