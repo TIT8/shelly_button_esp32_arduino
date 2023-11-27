@@ -18,10 +18,17 @@ So the CPU receive the PDM sample. It has to decimate and filter the train of da
 
 ❗**Note the difference: the nrf52 has a dedicated hardware to make the PDM to PCM conversion, filter the samples and decimate it**. 
 
+## Rule of buffers
+
 So the EasyDMA will raise an interrupt to the CPU when the transfer is complete. The data in the buffer will be already processed.  
+
 In the rp2040 the PIO make it easy to interface with the PDM train on the input bus, then the DMA will raise the interrupt. But now the CPU has to process the data inside the [interrupt service routine](https://github.com/arduino/ArduinoCore-mbed/blob/main/libraries/PDM/src/rp2040/PDM.cpp#L206) (via the OPENPDMFilter library). This will consume CPU time and without FPU it will be long enough to make very slow the rp2040 compared to the nrf52840 (indipendently from number of core and clock frequencies, ***here what matter are the hardware accelerators***).
 
+Interesting also the [double buffer](https://github.com/arduino/ArduinoCore-mbed/tree/main/libraries/PDM/src/utility) implementation to overwrite continuously the data inside it.
+
 ❗**Note the similarities: the PDM callback in either case will be runned in the IRQ handler, so do not block inside it**.
+
+Here the Edge Impulse code copy the microphone buffer to a buffer used to and it will process the audio data inside it. Now this part, unlike before, is CPU intensive for both, nrf52 and rp2040, but as before the one-slow-core-with-FPU nrf52 will be faster than the two-fast-cores-without-FPU rp2040. Also here the accelerators make the difference, as described in the section below.
 
 ## Choose the right CPU
 
