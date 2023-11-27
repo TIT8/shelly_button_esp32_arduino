@@ -40,13 +40,14 @@ Even if the rp2040 is a dual core CPU at 133 MHz, the ARM Cortex M4 inside the n
 
 In the table below I list the speed results from my tests. The Raspberry pi 4 is just for reference:
 
-| CPU | RP2040 | nrf52 | RPI 4 |
-| ---- | :----: | :----: | :----: |
-| ISA | ARM Cortex M0+ | ARM Cortex M4 | ARM Cortex-A72 |
-| CPU specs | <ul><li>Dual core 133 MHz</li><li>Without FPU</li><li>PIO for PDM samples + DMA</li></ul> | <ul><li>One core 64 MHz</li><li>With FPU</li><li>PDM hardware + Easy DMA</li></ul> | <ul><li>Quad core 1.8 GHz</li><li>With FPU and more</li><li>External MIC interface</li></ul> |
-| DSP time [^2] | 970 ms | 280 ms | 10 ms |
-| Inference time [^2] | 6 ms | 5 ms | 1 ms |
+| CPU | RP2040 | nrf52 | RPI 4 | ESP-EYE |
+| ---- | :----: | :----: | :----: | :----: |
+| ISA | ARM Cortex M0+ | ARM Cortex M4 | ARM Cortex-A72 | Xtensa LX6 |
+| CPU specs | <ul><li>Dual core 133 MHz</li><li>Without FPU</li><li>PIO for PDM samples + DMA</li></ul> | <ul><li>One core 64 MHz</li><li>With FPU</li><li>PDM hardware + Easy DMA</li></ul> | <ul><li>Quad core 1.8 GHz</li><li>With FPU and more</li><li>External MIC interface</li></ul> | <ul><li>Dual core 240 MHz</li><li>With FPU</li><li>I2S MIC + DMA</li></ul> | 
+| DSP time [^2] | 970 ms | 280 ms | 10 ms | 420 ms |
+| Inference time [^2] | 6 ms | 5 ms | 1 ms | 5ms |
 
+I believe that the difference between the ESP-EYE and the nrf52 is due to the _sampling-and-processing-from-the-mic_ part, instead of the audio digital processing (they both have a FPU). **The dedicated hardware on the nrf52 make it faster also than the EPS32**, so a PDM microphone here is better than a classic microphone connected via I2S.   
 Moving to faster CPU is not always better. This is why in today CPU, the AI part is made faster via special processor (directly training it on the CPU, not in the cloud).
 
 [^2]: Data coming from Edge Impulse. The real behaviour follows the data, from my tests.
