@@ -28,7 +28,9 @@ Interesting also the [double buffer](https://github.com/arduino/ArduinoCore-mbed
 
 ❗**Note the similarities: the PDM callback in either case will be runned in the IRQ handler, so do not block inside it**.
 
-Here the Edge Impulse code copy the microphone buffer to a buffer used to and it will process the audio data inside it. Now this part, unlike before, is CPU intensive for both, nrf52 and rp2040, but as before the _one-slow-core-with-FPU_ nrf52 will be faster than the _two-fast-cores-without-FPU_ rp2040. Also here the accelerators make the difference, as described in the section below.
+Here the Edge Impulse code copy the microphone buffer to a buffer used to and it will process the audio data inside it. Now this part, unlike before, is CPU intensive for both, nrf52 and rp2040, but as before the _one-slow-core-with-FPU_ nrf52 will be faster than the _two-fast-cores-without-FPU_ rp2040. Also here the accelerators make the difference, as described in the section below. [^1]
+
+[^1]: If you found errors in my way of thinking, please open and ISSUE and make me know.
 
 ## Choose the right CPU
 
@@ -42,12 +44,12 @@ In the table below I list the speed results from my tests. The Raspberry pi 4 is
 | ---- | :----: | :----: | :----: |
 | ISA | ARM Cortex M0+ | ARM Cortex M4 | ARM Cortex-A72 |
 | CPU specs | <ul><li>Dual core 133 MHz</li><li>Without FPU</li><li>PIO for PDM samples + DMA</li></ul> | <ul><li>One core 64 MHz</li><li>With FPU</li><li>PDM hardware + Easy DMA</li></ul> | <ul><li>Quad core 1.8 GHz</li><li>With FPU and more</li><li>External MIC interface</li></ul> |
-| DSP time [^1] | 970 ms | 280 ms | 10 ms |
-| Inference time | 6 ms | 5 ms | 1 ms |
+| DSP time [^2] | 970 ms | 280 ms | 10 ms |
+| Inference time [^2] | 6 ms | 5 ms | 1 ms |
 
 Moving to faster CPU is not always better. This is why in today CPU, the AI part is made faster via special processor (directly training it on the CPU, not in the cloud).
 
-[^1]: Data coming from Edge Impulse. The real behaviour follows the data, from my tests.
+[^2]: Data coming from Edge Impulse. The real behaviour follows the data, from my tests.
 
 ## Tweak the probabilities for your use case
 
@@ -65,7 +67,10 @@ Here is 99%, to make sure. You can lower it, but then you must expect lower qual
 
 ## The end
 
-If you have to send a command over Bluetooth (on Arduino Nano 33 Ble sense) or WIFI (on Arduino Nano rp2040 Connect) to the Shelly device, then you will send it in the probabilities check section of the loop function.
+If you have to send a command over Bluetooth (on Arduino Nano 33 Ble sense) or WIFI (on Arduino Nano rp2040 Connect) to the Shelly device, then you will send it in the probabilities check section of the loop function. 
 
 - On the rp2040 you can use the second core (unlike the computation part, here you can benefit from the parallel cores). It can communicate with the Nina-EPS32 module via SPI and send the command to the MQTT broker for example.
-- On the nrf52 you will use the MBED driver to talk to the Bluetooth driver and send the message. But here you have one core, so this will decrease the overall performance. So you will end up using an RTOS to switch back and forth (when needed) between the sending task and the inference task and make the illusion of the concurrency on only one core (like it was in the past to go on the Moon). The [Arduino Core for nrf52](https://github.com/arduino/ArduinoCore-mbed/tree/main/cores/arduino/mbed) is already built on MBED OS and will use CMSI-RTOS for Bluetooth.
+  
+- On the nrf52 you will use the MBED driver to talk to the Bluetooth driver and send the message. But here you have one core, so this will decrease the overall performance. So you will end up using an RTOS to switch back and forth (when needed) between the sending task and the inference task and make the illusion of the concurrency on only one core (like it was in the past to go on the Moon). The [Arduino Core for nrf52](https://github.com/arduino/ArduinoCore-mbed/tree/main/cores/arduino/mbed) is already built on MBED OS and will use CMSI-RTOS for Bluetooth. [^3]
+
+[^3]: If you found errors in my way of thinking, please open and ISSUE and make me know.
