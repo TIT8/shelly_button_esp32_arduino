@@ -30,7 +30,7 @@ Interesting also the [double buffer](https://github.com/arduino/ArduinoCore-mbed
 
 Here the Edge Impulse code copy the microphone buffer to a buffer used to and it will process the audio data inside it. Now this part, unlike before, is CPU intensive for both, nrf52 and rp2040, but as before the _one-slow-core-with-FPU_ nrf52 will be faster than the _two-fast-cores-without-FPU_ rp2040. Also here the accelerators make the difference, as described in the section below. [^1]
 
-[^1]: If you found errors in my way of thinking, please open and ISSUE and make me know.
+[^1]: If you found errors in my way of thinking, please open an ISSUE and let me know.
 
 ## Choose the right CPU
 
@@ -73,4 +73,4 @@ If you have to send a command over Bluetooth (on Arduino Nano 33 Ble sense) or W
   
 - On the nrf52 you will use the MBED driver to talk to the Bluetooth driver and send the message. But here you have one core, so this will decrease the overall performance. So you will end up using an RTOS to switch back and forth (when needed) between the sending task and the inference task and make the illusion of the concurrency on only one core (like it was in the past to go on the Moon). The [Arduino Core for nrf52](https://github.com/arduino/ArduinoCore-mbed/tree/main/cores/arduino/mbed) is already built on MBED OS and will use CMSI-RTOS for Bluetooth. [^3]
 
-[^3]: If you found errors in my way of thinking, please open and ISSUE and make me know.
+[^3]: If you found errors in my way of thinking, please open an ISSUE and let me know.
