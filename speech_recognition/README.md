@@ -38,7 +38,7 @@ In the table below I list the speed results from my tests. The Raspberry pi 4 is
 | DSP time [^1] | 970 ms | 280 ms | 10 ms |
 | Inference time [^1] | 6 ms | 5 ms | 1 ms |
 
-Moving to faster CPU is not always better. This is why for today CPU, the AI part is made faster via special processor.
+Moving to faster CPU is not always better. This is why in today CPU, the AI part is made faster via special processor (directly training it on the CPU, not in the cloud).
 
 [^1]: Data coming from Edge Impulse. The real behaviour follows the data, from my tests.
 
