@@ -28,7 +28,7 @@ Interesting also the [double buffer](https://github.com/arduino/ArduinoCore-mbed
 
 ❗**Note the similarities: the PDM callback in either case will be runned in the IRQ handler, so do not block inside it**.
 
-Here the Edge Impulse code copy the microphone buffer to a buffer used to and it will process the audio data inside it. Now this part, unlike before, is CPU intensive for both, nrf52 and rp2040, but as before the one-slow-core-with-FPU nrf52 will be faster than the two-fast-cores-without-FPU rp2040. Also here the accelerators make the difference, as described in the section below.
+Here the Edge Impulse code copy the microphone buffer to a buffer used to and it will process the audio data inside it. Now this part, unlike before, is CPU intensive for both, nrf52 and rp2040, but as before the _one-slow-core-with-FPU_ nrf52 will be faster than the _two-fast-cores-without-FPU_ rp2040. Also here the accelerators make the difference, as described in the section below.
 
 ## Choose the right CPU
 
