@@ -26,9 +26,10 @@ So the EasyDMA will raise an interrupt to the CPU when the transfer is complete 
 
 In the rp2040, the PIO makes it easy to interface with the PDM train on the input bus. Then, the DMA will raise the interrupt. However, the CPU has to process the data inside the [interrupt service routine](https://github.com/arduino/ArduinoCore-mbed/blob/main/libraries/PDM/src/rp2040/PDM.cpp#L206) (via the OPENPDMFilter library). This will consume CPU time and, without an FPU, it will be long enough to significantly slow down the rp2040 compared to the nrf52840 (independently from the number of cores and clock frequencies; ***here what matters are the hardware accelerators***).
 
-The [double buffer](https://github.com/arduino/ArduinoCore-mbed/tree/main/libraries/PDM/src/utility) implementation is interesting for continuously overwriting the data inside it.
+The [double buffer](https://github.com/arduino/ArduinoCore-mbed/tree/main/libraries/PDM/src/utility) will keep the train of sample coming from the microphone.   
+Now the Edge Impulse code copies the microphone buffer and processes the audio data inside it. This part, unlike before, is CPU intensive for both nrf52 and rp2040, but as before, the _one-slow-core-with-FPU_ nrf52 will be faster than the _two-fast-cores-without-FPU_ rp2040.  
 
-In this case, the Edge Impulse code copies the microphone buffer and processes the audio data inside it. This part, unlike before, is CPU intensive for both nrf52 and rp2040, but as before, the _one-slow-core-with-FPU_ nrf52 will be faster than the _two-fast-cores-without-FPU_ rp2040. The number of cores is useless without software able to do parallel computing on the rp2040. Also here the accelerators make the difference, as described in the section below. [^1]
+The number of cores is useless without software able to do parallel computing on the rp2040. Also here the accelerators make the difference, as described in the section below. [^1]
 
 ❗**Note the similarities: the PDM callback in either case will run in the IRQ handler, so do not block inside it**.
 
