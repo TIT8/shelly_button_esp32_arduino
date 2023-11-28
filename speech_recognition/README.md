@@ -12,7 +12,7 @@ The system works well, achieving impressive results, sometimes perfect and somet
 
 The [PDM library](https://github.com/arduino/ArduinoCore-mbed/tree/main/libraries/PDM) of Arduino conceals the fascinating details. The CPU receives PDM samples, decimates and filters the data train, then makes inferences on the buffered data, toggling the LED. All of this happens while the PDM microphone continuously fills the data buffer without waiting for the CPU. How does it work?
 
-- On the nrf52840, there is a [special dedicated hardware](https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.nrf52832.ps.v1.1%2Fpdm.html) to handle the digital signal part. It buffers the data in memory and raises an interrupt when the buffer is full via the [EasyDMA](https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.nrf52832.ps.v1.1%2Fppi.html) module. The [PDM library on the nrf52](https://github.com/arduino/ArduinoCore-mbed/tree/main/libraries/PDM/src/nrf52) utilizes the HAL drivers from Nordic to handle events when [interrupts arrive](https://github.com/arduino/ArduinoCore-mbed/blob/main/libraries/PDM/src/nrf52/PDM.cpp#L196). Note that the application runs as a [task](https://github.com/arduino/ArduinoCore-mbed/blob/main/libraries/PDM/src/nrf52/PDM.cpp#L132) of MBED OS.
+- On the nrf52840, there is a [special dedicated hardware](https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.nrf52832.ps.v1.1%2Fpdm.html) to handle the digital signal part. It buffers the data in memory and raises an interrupt when the buffer is full via the [EasyDMA](https://infocenter.nordicsemi.com/topic/com.nordic.infocenter.nrf52832.ps.v1.1/easydma.html?cp=5_2_0_9#easydma) module. The [PDM library on the nrf52](https://github.com/arduino/ArduinoCore-mbed/tree/main/libraries/PDM/src/nrf52) utilizes the HAL drivers from Nordic to handle events when [interrupts arrive](https://github.com/arduino/ArduinoCore-mbed/blob/main/libraries/PDM/src/nrf52/PDM.cpp#L196). Note that the application runs as a [task](https://github.com/arduino/ArduinoCore-mbed/blob/main/libraries/PDM/src/nrf52/PDM.cpp#L132) of MBED OS.
 
 - On the rp2040, there's no dedicated hardware to receive PDM samples and process them. However, the PIO interface, a programmable hardware feature, facilitates communication with external peripherals. Therefore, the [PDM library on the rp2040](https://github.com/arduino/ArduinoCore-mbed/tree/main/libraries/PDM/src/rp2040) focuses on using one of the four PIOs to receive samples and talks to the DMA to forward them in the main memory. The DSP must be implemented in [software](https://github.com/arduino/ArduinoCore-mbed/blob/main/libraries/PDM/src/rp2040/OpenPDMFilter.c) inside the CPU.
 
@@ -48,8 +48,9 @@ In the table below, I list the speed results from my tests. The Raspberry Pi 4 a
 | ---- | :----: | :----: | :----: | :----: |
 | ISA | ARM Cortex M0+ | ARM Cortex M4 | ARM Cortex-A72 | Xtensa LX6 |
 | CPU specs | <ul><li>Dual-core 133 MHz</li><li>Without FPU</li><li>PIO for PDM samples + DMA</li></ul> | <ul><li>One core 64 MHz</li><li>With FPU</li><li>PDM hardware + Easy DMA</li></ul> | <ul><li>Quad-core 1.8 GHz</li><li>With FPU and more</li><li>External MIC interface</li></ul> | <ul><li>Dual-core 240 MHz</li><li>With FPU</li><li>I2S MIC + DMA</li></ul> |
-| DSP time [^2] | 950 ms | 291 ms | 5 ms | 408 ms |
-| Inference time [^2] | 11 ms | 5 ms | 1 ms | 6ms |
+| DSP time | 950 ms | 291 ms | 5 ms | 408 ms |
+| Inference time | 11 ms | 5 ms | 1 ms | 6ms |
+| **Total** | **961 ms** | **296 ms** | **6 ms** | **414 ms** |
 
 I believe that the difference between the ESP-EYE and the nrf52 is due to the _sampling-and-processing-from-the-mic_ part, instead of the audio digital processing (they both have an FPU). **The dedicated hardware on the nrf52 makes it faster also than the ESP32**, so a PDM microphone here is better than a classic microphone connected via I2S.
 
@@ -83,7 +84,7 @@ If you have to send a command over Bluetooth or WiFi to the Shelly device, then 
 
 - On the nrf52, you will use the MBED driver to talk to the Bluetooth driver and send the message. But here you have one core, so this will decrease the overall performance. So you will end up using an RTOS to switch back and forth (when needed) between the sending task and the inference task and make the illusion of the concurrency on only one core. The [Arduino Core for nrf52](https://github.com/arduino/ArduinoCore-mbed/tree/main/cores/arduino/mbed) is already built on MBED OS and will use [CMSI-RTOS](https://github.com/arduino/ArduinoCore-mbed/blob/main/variants/ARDUINO_NANO33BLE/mbed_config.h#L299) for Bluetooth. [^3]
 
-Now, the multicore architecture makes it smoother to run multiple tasks. However, on the nrf24, wireless communication may add too much overhead (I haven't tested it, but Serial read/write works well while listening and inferencing). For the nrf52, you can choose another way if Bluetooth/BLE is not fast enough, such as connecting directly to the ESP32 that handles the button.
+❗Now, the multicore architecture makes it smoother to run multiple tasks. However, on the nrf24, wireless communication may add too much overhead (I haven't tested it, but Serial read/write works well while listening and inferencing). For the nrf52, you can choose another way if Bluetooth/BLE is not fast enough, such as connecting directly to the ESP32 that handles the button.
 
 ***Keep in mind that communication with other devices can significantly decrease performance on the nrf52.***
 
