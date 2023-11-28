@@ -28,9 +28,9 @@ In the rp2040, the PIO makes it easy to interface with the PDM train on the inpu
 
 The [double buffer](https://github.com/arduino/ArduinoCore-mbed/tree/main/libraries/PDM/src/utility) implementation is interesting for continuously overwriting the data inside it.
 
-❗**Note the similarities: the PDM callback in either case will run in the IRQ handler, so do not block inside it**.
-
 In this case, the Edge Impulse code copies the microphone buffer and processes the audio data inside it. This part, unlike before, is CPU intensive for both nrf52 and rp2040, but as before, the _one-slow-core-with-FPU_ nrf52 will be faster than the _two-fast-cores-without-FPU_ rp2040. The number of cores is useless without software able to do parallel computing on the rp2040. Also here the accelerators make the difference, as described in the section below. [^1]
+
+❗**Note the similarities: the PDM callback in either case will run in the IRQ handler, so do not block inside it**.
 
 [^1]: If you find errors in my way of thinking, please open an ISSUE and let me know.
 
@@ -84,9 +84,9 @@ If you have to send a command over Bluetooth or WiFi to the Shelly device, then 
 
 - On the nrf52, you will use the MBED driver to talk to the Bluetooth driver and send the message. But here you have one core, so this will decrease the overall performance. So you will end up using an RTOS to switch back and forth (when needed) between the sending task and the inference task and make the illusion of the concurrency on only one core. The [Arduino Core for nrf52](https://github.com/arduino/ArduinoCore-mbed/tree/main/cores/arduino/mbed) is already built on MBED OS and will use [CMSI-RTOS](https://github.com/arduino/ArduinoCore-mbed/blob/main/variants/ARDUINO_NANO33BLE/mbed_config.h#L299) for Bluetooth. [^3]
 
-❗Now, the multicore architecture makes it smoother to run multiple tasks. However, on the nrf24, wireless communication may add too much overhead (I haven't tested it, but Serial read/write works well while listening and inferencing). For the nrf52, you can choose another way if Bluetooth/BLE is not fast enough, such as connecting directly to the ESP32 that handles the button.
+❗ **Keep in mind that communication with other devices can significantly decrease performance on the nrf52.**
 
-***Keep in mind that communication with other devices can significantly decrease performance on the nrf52.***
+Now, the multicore architecture makes it smoother to run multiple tasks. However, on the nrf24, wireless communication may add too much overhead (I haven't tested it, but Serial read/write works well while listening and inferencing). For the nrf52, you can choose another way if Bluetooth/BLE is not fast enough, such as connecting directly to the ESP32 that handles the button.
 
 <br>
 
