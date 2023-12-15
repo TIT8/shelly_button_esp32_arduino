@@ -10,7 +10,7 @@ A push button is connected to the [ESP32](https://github.com/espressif/arduino-e
 
 <br>
 
-If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-triggering#unfiltered) in your wall and want to try out the MQTT connection without purchasing or wiring up the micontroller, on [Wokwi](https://wokwi.com/projects/380235936487757825) I've saved a prototype of the project (without the OTA code).
+If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-triggering#unfiltered) in your wall and want to try out the MQTT connection without purchasing or wiring up the micontroller, I've saved a prototype of the project on ***[Wokwi](https://wokwi.com/projects/380235936487757825)***.
 
 - For testing I use the [Hive MQ public broker](https://www.hivemq.com/mqtt/public-mqtt-broker/).
 
