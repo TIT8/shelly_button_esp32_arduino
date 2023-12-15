@@ -139,7 +139,7 @@ void loop() {
 
   button_current = digitalRead(BUTTON_PIN);
   if (button_current != button_last) {
-    previous_millis = millis();
+    previous_millis = millis();   // Non blocking mode
   }
 
   if ((millis() - previous_millis) > interval) {  // Debouncing
