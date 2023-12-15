@@ -16,6 +16,8 @@ If you have a [Shelly](https://www.shelly.com/en-it/products/switching-and-trigg
 
 - For production I use [Mosquitto](https://mosquitto.org/) from a Docker container inside my local environment (see the [Docker compose file](https://github.com/TIT8/shelly_button_esp32/blob/master/compose.yaml)).
 
+❗ The code should already handle reconnections if something goes wrong.
+
 ## Prerequisities
 
 1. [Arduino IDE](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html#installing-using-arduino-ide) to code, compile and upload the code to the ESP32 Wroom board.
