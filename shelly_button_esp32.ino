@@ -110,7 +110,7 @@ void callback(char* topic, byte* message, unsigned int length) {
 
 
 void reconnect() {
-  setup_wifi(); // Be sure that the disconnection was not caused by wifi issue
+  if (WiFi.status() != WL_CONNECTED) WiFi.reconnect(); // Be sure that the disconnection was not caused by wifi issue
   
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
