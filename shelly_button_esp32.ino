@@ -110,6 +110,8 @@ void callback(char* topic, byte* message, unsigned int length) {
 
 
 void reconnect() {
+  setup_wifi(); // Be sure that the disconnection was not caused by wifi issue
+  
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
 
@@ -121,6 +123,7 @@ void reconnect() {
       Serial.print("failed, rc=");
       Serial.print(client.state());
       Serial.println(" try again in 5 seconds");
+      
       // Wait 5 seconds before retrying
       delay(5000);
     }
