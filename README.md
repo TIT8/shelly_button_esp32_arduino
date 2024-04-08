@@ -50,3 +50,6 @@ Take a look also at the [ESP-IDF version](https://github.com/TIT8/shelly_esp32_b
 
 ![Screenshot (31)](https://github.com/TIT8/shelly_button_esp32/assets/68781644/e6de6e83-4aeb-428b-a845-5be89e2eb7bd)
 
+<br>
+
+_[Why don't you use Bluetooth](https://github.com/TIT8/shelly_esp32_button_espidf?tab=readme-ov-file#why-dont-you-use-bluetooth)_ :interrobang: 
