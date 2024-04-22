@@ -88,6 +88,8 @@ If you have to send a command over Bluetooth or WiFi to the Shelly device, then 
 
 Now, the multicore architecture makes it smoother to run multiple tasks. However, on the nrf24, wireless communication may add too much overhead (I haven't tested it, but Serial read/write works well while listening and inferencing). For the nrf52, you can choose another way if Bluetooth/BLE is not fast enough, such as connecting directly to the ESP32 that handles the button or other hardware via UART.
 
+<br>
+
 ## Updates :construction_worker:
 
 Actually, I've figured it out: knowing Mbed OS better along with PDM/DMA/Serial hardware and software, I have a [working example](https://github.com/TIT8/BLE-sensor_PDM-microphone) of speech recognition in my home. The speech recognition part is not on the nrf52, but online. So totally another approach, but still useful for learning. 
