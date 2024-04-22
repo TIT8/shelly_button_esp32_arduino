@@ -84,11 +84,13 @@ If you have to send a command over Bluetooth or WiFi to the Shelly device, then 
 
 - On the nrf52, you will use the MBED driver to talk to the Bluetooth driver and send the message. But here you have one core, so this will decrease the overall performance. So you will end up using an RTOS to switch back and forth (when needed) between the sending task and the inference task and make the illusion of the concurrency on only one core. The [Arduino Core for nrf52](https://github.com/arduino/ArduinoCore-mbed/tree/main/cores/arduino/mbed) is already built on MBED OS and will use [CMSI-RTOS](https://github.com/arduino/ArduinoCore-mbed/blob/main/variants/ARDUINO_NANO33BLE/mbed_config.h#L299) for Bluetooth. [^3]
 
-<del>❗ **Keep in mind that communication with other devices can significantly decrease performance on the nrf52.** </del>
+❗ **Keep in mind that communication with other devices can significantly decrease performance on the nrf52.**
 
-<del> Now, the multicore architecture makes it smoother to run multiple tasks. However, on the nrf24, wireless communication may add too much overhead (I haven't tested it, but Serial read/write works well while listening and inferencing). For the nrf52, you can choose another way if Bluetooth/BLE is not fast enough, such as connecting directly to the ESP32 that handles the button. </del>
+Now, the multicore architecture makes it smoother to run multiple tasks. However, on the nrf24, wireless communication may add too much overhead (I haven't tested it, but Serial read/write works well while listening and inferencing). For the nrf52, you can choose another way if Bluetooth/BLE is not fast enough, such as connecting directly to the ESP32 that handles the button or other hardware via UART.
 
-Actually, I've figured it out: knowing Mbed OS better along with PDM/DMA/Serial hardware and software, I have a [working example](https://github.com/TIT8/BLE-sensor_PDM-microphone) of speech recognition in my home.
+## Updates :construction_worker:
+
+Actually, I've figured it out: knowing Mbed OS better along with PDM/DMA/Serial hardware and software, I have a [working example](https://github.com/TIT8/BLE-sensor_PDM-microphone) of speech recognition in my home. The speech recognition part is not on the nrf52, but online. So totally another approach, but still useful for learning. 
 
 <br>
 
