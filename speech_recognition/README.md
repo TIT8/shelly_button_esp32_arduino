@@ -97,7 +97,89 @@ Now, the multicore architecture makes it smoother to run multiple tasks. However
 
 See [Updates](#updates-construction_worker) below for more information. It's important to note that you'll need a Real-Time Operating System (RTOS), and I discovered that the default CMSIS-RTOS tick frequency for Arm processors is 1 KHz.
 
-The PDM driver operates within an interrupt context triggered by a dedicated hardware accelerator (specifically, there's a special-purpose hardware on the nrf52840 I'm utilizing for PDM), which runs in the background and signals the CPU upon completion (EasyDMA proves useful for the accelerator here). The Edge Impulse code run a ring buffer for continuous recording and use more memory setting `PDM.setBufferSize()` high enough, but it doesn't start a new thread (it uses the Arduino main one).    
+The PDM driver operates within an interrupt context triggered by a dedicated hardware accelerator (specifically, there's a special-purpose hardware on the nrf52840 I'm utilizing for PDM), which runs in the background and signals the CPU upon completion (EasyDMA proves useful for the accelerator here). The Edge Impulse code run a ring buffer for continuous recording and use more memory setting `PDM.setBufferSize()` high enough, but it doesn't start a new thread (it uses the Arduino main one).  
+
+```C++
+/**
+ * @brief      PDM buffer full callback
+ *             Get data and call audio thread callback
+ */
+static void pdm_data_ready_inference_callback(void)
+{
+    int bytesAvailable = PDM.available();
+
+    // read into the sample buffer
+    int bytesRead = PDM.read((char *)&sampleBuffer[0], bytesAvailable);
+
+    if (record_ready == true) {
+        for (int i = 0; i<bytesRead>> 1; i++) {
+            inference.buffers[inference.buf_select][inference.buf_count++] = sampleBuffer[i];
+
+            if (inference.buf_count >= inference.n_samples) {
+                inference.buf_select ^= 1;
+                inference.buf_count = 0;
+                inference.buf_ready = 1;
+            }
+        }
+    }
+}
+
+/**
+ * @brief      Init inferencing struct and setup/start PDM
+ *
+ * @param[in]  n_samples  The n samples
+ *
+ * @return     { description_of_the_return_value }
+ */
+static bool microphone_inference_start(uint32_t n_samples)
+{
+    inference.buffers[0] = (signed short *)malloc(n_samples * sizeof(signed short));
+
+    if (inference.buffers[0] == NULL) {
+        return false;
+    }
+
+    inference.buffers[1] = (signed short *)malloc(n_samples * sizeof(signed short));
+
+    if (inference.buffers[1] == NULL) {
+        free(inference.buffers[0]);
+        return false;
+    }
+
+    sampleBuffer = (signed short *)malloc((n_samples >> 1) * sizeof(signed short));
+
+    if (sampleBuffer == NULL) {
+        free(inference.buffers[0]);
+        free(inference.buffers[1]);
+        return false;
+    }
+
+    inference.buf_select = 0;
+    inference.buf_count = 0;
+    inference.n_samples = n_samples;
+    inference.buf_ready = 0;
+
+    // configure the data receive callback
+    PDM.onReceive(&pdm_data_ready_inference_callback);
+
+    PDM.setBufferSize((n_samples >> 1) * sizeof(int16_t));
+
+    // initialize PDM with:
+    // - one channel (mono mode)
+    // - a 16 kHz sample rate
+    if (!PDM.begin(1, EI_CLASSIFIER_FREQUENCY)) {
+        ei_printf("Failed to start PDM!");
+    }
+
+    // set the gain, defaults to 20
+    PDM.setGain(127);
+
+    record_ready = true;
+
+    return true;
+}
+```
+
 Additionally, Mbed OS offers the capability to [schedule events](https://os.mbed.com/docs/mbed-os/v6.16/apis/eventqueue.html). With this in mind, you can assign high priority to the speech recognition thread and allocate a lower priority thread to handle BLE tasks. You can then schedule BLE actions on the event loop, which consistently runs in the background of the nrf52840. <ins>Therefore, if I were to make a bet, I believe that BLE won't compromise the functionality of speech recognition</ins>. Given the opportunity, I would conduct further testing.
 
 <br>
