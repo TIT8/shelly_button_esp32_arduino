@@ -36,6 +36,10 @@ The number of cores is useless without software able to do parallel computing on
 
 <br>
 
+## Edge Impulse 
+
+To learn more about what happens under the hood, the [official documentation](https://docs.edgeimpulse.com/docs/tutorials/advanced-inferencing/continuous-audio-sampling) is astonishingly well-written!
+
 ## Choose the Right CPU
 
 The rp2040 is a great CPU, and the PIO hardware is a significant feature. However, without the floating-point unit, the intensive digital signal processing on the audio samples becomes too much for the ARM Cortex MO+ inside it. Consequently, it ends up using too much time to process the sample in the buffer, resulting in inference only after a significant latency. This is noticeable.
