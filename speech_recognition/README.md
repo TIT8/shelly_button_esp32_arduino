@@ -188,7 +188,7 @@ Additionally, Mbed OS offers the capability to [schedule events](https://os.mbed
 
 Actually, I've figured it out: knowing Mbed OS better along with PDM/DMA/Serial hardware and software, I have a [working example](https://github.com/TIT8/BLE-sensor_PDM-microphone) of speech recognition in my home. The speech recognition part is not on the nrf52, but online. So totally another approach, but still useful for learning. 
 
-🐢 The trade-off for this approach is the latency. 
+🐢 The trade-off with this approach is the latency. 
 
 <br>
 
