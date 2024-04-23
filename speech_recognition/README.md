@@ -84,9 +84,18 @@ If you have to send a command over Bluetooth or WiFi to the Shelly device, then 
 
 - On the nrf52, you will use the MBED driver to talk to the Bluetooth driver and send the message. But here you have one core, so this will decrease the overall performance. So you will end up using an RTOS to switch back and forth (when needed) between the sending task and the inference task and make the illusion of the concurrency on only one core. The [Arduino Core for nrf52](https://github.com/arduino/ArduinoCore-mbed/tree/main/cores/arduino/mbed) is already built on MBED OS and will use [CMSI-RTOS](https://github.com/arduino/ArduinoCore-mbed/blob/main/variants/ARDUINO_NANO33BLE/mbed_config.h#L299) for Bluetooth. [^3]
 
-❗ **Keep in mind that communication with other devices can significantly decrease performance on the nrf52.**
+---------------------------------
+
+❗ **Keep in mind that communication with other devices can significantly decrease performance on the nrf52.**   
+ &nbsp; &nbsp; &nbsp; Please see [errata-corrige section](#errata-corrige) ⏬.
+
+----------------------------------
 
 Now, the multicore architecture makes it smoother to run multiple tasks. However, on the nrf24, wireless communication may add too much overhead (I haven't tested it, but Serial read/write works well while listening and inferencing). For the nrf52, you can choose another way if Bluetooth/BLE is not fast enough, such as connecting directly to the ESP32 that handles the button or other hardware via UART.
+
+### Errata-corrige
+
+See [Updates](#updates) below for more information. It's important to note that you'll need a Real-Time Operating System (RTOS), and I discovered that the default CMSIS-RTOS tick frequency for Arm processors is 1 KHz. The PDM driver operates within an interrupt context triggered by a dedicated hardware accelerator (specifically, there's a special-purpose hardware on the nrf52840 I'm utilizing for PDM), which runs in the background and signals the CPU upon completion (EasyDMA proves useful for the accelerator here). Additionally, Mbed OS offers the capability to [schedule events](https://os.mbed.com/docs/mbed-os/v6.16/apis/eventqueue.html). With this in mind, you can assign high priority to the speech recognition thread and allocate a lower priority thread to handle BLE tasks. You can then schedule BLE actions on the event loop, which consistently runs in the background of the nrf52840. <ins>Therefore, I'm uncertain whether enabling BLE will compromise the functionality of speech recognition</ins>. Given the opportunity, I would conduct further testing.
 
 <br>
 
