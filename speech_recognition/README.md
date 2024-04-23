@@ -182,6 +182,8 @@ static bool microphone_inference_start(uint32_t n_samples)
 
 Additionally, Mbed OS offers the capability to [schedule events](https://os.mbed.com/docs/mbed-os/v6.16/apis/eventqueue.html). With this in mind, you can assign high priority to the speech recognition thread and allocate a lower priority thread to handle BLE tasks. You can then schedule BLE actions on the event loop, which consistently runs in the background of the nrf52840. <ins>Therefore, if I were to make a bet, I believe that BLE won't compromise the functionality of speech recognition</ins>. Given the opportunity, I would conduct further testing.
 
+I believe that implementing the ability to send commands via Bluetooth Low Energy (BLE) after recognizing a keyword could be a great feature. In this scenario, the nrf52840 would consume less power compared to the rp2040 due to its support for Bluetooth Low Energy, as opposed to Classic Bluetooth or WiFi solutions. The Arduino board should act as the peripheral device (similar to the example [here](https://github.com/TIT8/BLE-sensor_PDM-microphone)), while you'll require a central device (such as the one found [here](https://github.com/TIT8/BLE-sensor_PDM-microphone/tree/master/python_test_ble)) to receive the commands.
+
 <br>
 
 ## Updates :construction_worker:
