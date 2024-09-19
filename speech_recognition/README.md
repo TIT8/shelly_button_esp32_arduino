@@ -192,11 +192,17 @@ I believe that implementing the ability to send commands via Bluetooth Low Energ
 
 <br>
 
-## Updates :construction_worker:
+## Updates 1 :construction_worker:
 
 Actually, I've figured it out: knowing Mbed OS better along with PDM/DMA/Serial hardware and software, I have a [working example](https://github.com/TIT8/BLE-sensor_PDM-microphone) of speech recognition in my home. The speech recognition part is not on the nrf52, but online. So totally another approach, but still useful for learning. 
 
 🐢 The trade-off with this approach is the latency. 
+
+## Updates 2 :v:
+
+After 4 months from the "updates 1", I know better the world of classification problem (thanks [Polimi](https://www.polimi.it/)). I've a better understanding of what Edge Impulse does under the hood and I know more ways to tweak the model in Edge Impulse. So the `.tflite` model can be trained better (avoiding overfitting and increasing accuracy of the audio classification problem) in order to become an effective solution, doing all the work on the nrf52 and avoiding external connections. Latency can be minimal.
+
+Knowing how a neural network emulate the human brain, what activation function, backpropagation, optimizer and learning rate mean can help you train the NN better, increasing accuracy. Playing with neural networks can be a great lesson. Start from [here](https://www.tensorflow.org/).
 
 <br>
 
