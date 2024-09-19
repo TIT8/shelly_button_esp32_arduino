@@ -104,7 +104,7 @@ Now, the multicore architecture makes it smoother to run multiple tasks. However
 See [Updates](#updates-construction_worker) below for more information. It's important to note that you'll need a Real-Time Operating System (RTOS), and I discovered that the default CMSIS-RTOS tick frequency for Arm processors is 1 KHz.
 
 The PDM driver operates within an interrupt context triggered by a dedicated hardware accelerator (specifically, there's a special-purpose hardware on the nrf52840 I'm utilizing for PDM), which runs in the background and signals the CPU upon completion (EasyDMA proves useful for the accelerator here). The Edge Impulse code run a <ins>ring buffer for continuous recording</ins> and use more memory setting `PDM.setBufferSize()` high enough, but it doesn't start a new thread (it uses the [Arduino main one](https://github.com/TIT8/shelly_button_esp32_arduino/blob/354df147520500ee396219cdb4c72466efe719a3/speech_recognition/modified_nano_ble33_sense_microphone_continuous.ino#L91)).  
-%nbsp;
+$nbsp;
 ```C++
 /**
  * @brief      PDM buffer full callback
